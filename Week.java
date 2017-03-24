@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Week {
-	private String date;
+	private String weekTitle;
 	private List<String> sunday = new ArrayList<String>();
 	private List<String> monday = new ArrayList<String>();
 	private List<String> tuesday = new ArrayList<String>();
@@ -26,20 +26,29 @@ public class Week {
 		int tempYear2 = Integer.parseInt(date2.substring(0, date2.indexOf('/')).substring(0, date2.indexOf('/')).substring(date2.indexOf('/')));
 		
 		
-		if(tempMonth1 > tempMonth2 || tempYear1 > tempYear2){
+		/*if(tempMonth1 > tempMonth2 || tempYear1 > tempYear2){
 			//Get here if Month or Year (1) is greater than Month or Year (2)
 			return false;
-		} else if(tempMonth1 == tempMonth2){
+		}else if(tempMonth1 == && tempDay1 == 31){
+			//Get here if 30 day month with day 31
+		}else if(tempMonth1 == tempMonth2){
 			//Get here if same month 
 			if(tempYear1 == tempYear2){
 				// Get here if same month and year
+				if(tempDay2 - tempDay1 == 6){
+					return true;
+				} else{
+					return false;
+				}
 			} else{
 				//Get here if same month but different year
+				return false;
 			} 
 		} else if(tempMonth1 == tempMonth2 - 1 || (tempMonth1 == 12 && tempMonth2 == 1)){
 			//Get here if valid Month to Month separation
+			if(tempMonth 
 		} else{
 			return false;
-		}
+		}*/ // 
 	}
 }
