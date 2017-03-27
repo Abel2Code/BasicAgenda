@@ -72,4 +72,16 @@ public class Week {
 	public void setSaturday(List<String> saturday) {
 		this.saturday = saturday;
 	}
+	
+	public String getWeekTitle(){
+		return weekTitle;
+	}
+	
+	public void setWeekTitle(String weekTitle){
+		this.weekTitle = weekTitle;
+	}
+	
+	public String toString(){
+		return weekTitle;
+	}
 }
