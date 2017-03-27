@@ -14,24 +14,112 @@ public class AgendaDriver {
 	
 	public static void startGUI(){
 		int selection;
-		String[] mainChoices = {"Quit","Create an New Week", "View Past Weeks", "Copy a Past Week's Agenda"};
+		String[] mainChoices = {"Quit", "Create an New Week", "Add to the Week's Agenda", "View Past Weeks", "Copy a Past Week's Agenda"};
 		String[] daysOfWeek = {"Quit","Sunday","Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday"};
 
 		do {
 
 			selection = JOptionPane.showOptionDialog(null, "Would you like to deal with: ", "Main Menu", JOptionPane.DEFAULT_OPTION,JOptionPane.PLAIN_MESSAGE, null, mainChoices, null);
-
+			int latestWeek = weeks.size();
+			
 			switch (selection) {
 			case 1:
-				weeks.add(new Week(JOptionPane.showInputDialog("What would you like to name this Week?")));
-				selection = JOptionPane.showOptionDialog(null, "Would you like to deal with: ", "Main Menu", JOptionPane.DEFAULT_OPTION,JOptionPane.PLAIN_MESSAGE, null, mainChoices, null);
-				addToWeek(selection);
+				String nameOfWeek = JOptionPane.showInputDialog("What would you like to name this Week?");
+				weeks.add(new Week(nameOfWeek));
+				JOptionPane.showMessageDialog(null, "Success! " + nameOfWeek + " was created.");
 				break;
 			case 2:
-				;
+				if(weeks.isEmpty()){
+					JOptionPane.showMessageDialog(null, "ERROR: You must create a week first.");
+				}else{
+				selection = JOptionPane.showOptionDialog(null, "What day would you like to add to " + weeks.get(latestWeek - 1), "Main Menu", JOptionPane.DEFAULT_OPTION,JOptionPane.PLAIN_MESSAGE, null, daysOfWeek, null);
+				addToWeek(selection);
+				}
 				break;
 			case 3:
+				StringBuilder sb = new StringBuilder("Weeks:");
+				if (weeks.isEmpty()) {
+					sb.append("\n     None");
+				} else {
+					for (Week interval : weeks) {
+						sb.append("\n     " + interval);
+					}
+				} 
 				
+				JOptionPane.showMessageDialog(null, sb);
+				
+				String tempWeek = JOptionPane.showInputDialog(null, "Enter the name of the week you would like to view.");
+				int tempWeekInterval = -1;
+				System.out.println(latestWeek);
+				int counter = 0;
+				for(Week weekInterval: weeks){
+					if(weekInterval.getWeekTitle()== tempWeek){
+						tempWeekInterval = counter;
+						break;
+					}
+					counter++;
+				}
+				
+				Week weekAgenda = weeks.get(tempWeekInterval);
+				if(tempWeekInterval != -1){
+					StringBuilder agenda = new StringBuilder(weekAgenda + ":");
+					agenda.append("\n Sunday:");
+					if(weekAgenda.getSunday().isEmpty()){
+						agenda.append("\n     None");
+					} else{
+						for(String interval : weekAgenda.getSunday()){
+							agenda.append("\n     " + interval);
+						}
+					}
+					agenda.append("\n Monday:");
+					if(weekAgenda.getMonday().isEmpty()){
+						agenda.append("\n     None");
+					} else{
+						for(String interval : weekAgenda.getMonday()){
+							agenda.append("\n     " + interval);
+						}
+					}
+					agenda.append("\n Tuesday:");
+					if(weekAgenda.getTuesday().isEmpty()){
+						agenda.append("\n     None");
+					} else{
+						for(String interval : weekAgenda.getTuesday()){
+							agenda.append("\n     " + interval);
+						}
+					}
+					agenda.append("\n Wednesday:");
+					if(weekAgenda.getWednesday().isEmpty()){
+						agenda.append("\n     None");
+					} else{
+						for(String interval : weekAgenda.getWednesday()){
+							agenda.append("\n     " + interval);
+						}
+					}
+					agenda.append("\n Thursday:");
+					if(weekAgenda.getThursday().isEmpty()){
+						agenda.append("\n     None");
+					} else{
+						for(String interval : weekAgenda.getThursday()){
+							agenda.append("\n     " + interval);
+						}
+					}
+					agenda.append("\n Friday:");
+					if(weekAgenda.getFriday().isEmpty()){
+						agenda.append("\n     None");
+					} else{
+						for(String interval : weekAgenda.getFriday()){
+							agenda.append("\n     " + interval);
+						}
+					}
+					agenda.append("\n Saturday:");
+					if(weekAgenda.getSaturday().isEmpty()){
+						agenda.append("\n     None");
+					} else{
+						for(String interval : weekAgenda.getSaturday()){
+							agenda.append("\n     " + interval);
+						}
+					}
+				}
 			}
 
 		} while (selection != 0 && selection != JOptionPane.CLOSED_OPTION);
@@ -41,25 +129,25 @@ public class AgendaDriver {
 		int latestWeek = weeks.size();
 		switch (selection) {
 		case 1:
-			weeks.get(latestWeek).getSunday().add(JOptionPane.showInputDialog("What would you like to add to Sunday?"));
+			weeks.get(latestWeek - 1).getSunday().add(JOptionPane.showInputDialog("What would you like to add to Sunday?"));
 			break;
 		case 2:
-			weeks.get(latestWeek).getMonday().add(JOptionPane.showInputDialog("What would you like to add to Monday?"));
+			weeks.get(latestWeek - 1).getMonday().add(JOptionPane.showInputDialog("What would you like to add to Monday?"));
 			break;
 		case 3:
-			weeks.get(latestWeek).getTuesday().add(JOptionPane.showInputDialog("What would you like to add to Tuesday?"));
+			weeks.get(latestWeek - 1).getTuesday().add(JOptionPane.showInputDialog("What would you like to add to Tuesday?"));
 			break;
 		case 4: 
-			weeks.get(latestWeek).getWednesday().add(JOptionPane.showInputDialog("What would you like to add to Wednesday?"));
+			weeks.get(latestWeek - 1).getWednesday().add(JOptionPane.showInputDialog("What would you like to add to Wednesday?"));
 			break;
 		case 5:
-			weeks.get(latestWeek).getThursday().add(JOptionPane.showInputDialog("What would you like to add to Thursday?"));
+			weeks.get(latestWeek - 1).getThursday().add(JOptionPane.showInputDialog("What would you like to add to Thursday?"));
 			break;
 		case 6:
-			weeks.get(latestWeek).getFriday().add(JOptionPane.showInputDialog("What would you like to add to Friday?"));
+			weeks.get(latestWeek - 1).getFriday().add(JOptionPane.showInputDialog("What would you like to add to Friday?"));
 			break;
 		case 7:
-			weeks.get(latestWeek).getSaturday().add(JOptionPane.showInputDialog("What would you like to add to Saturday?"));
+			weeks.get(latestWeek - 1).getSaturday().add(JOptionPane.showInputDialog("What would you like to add to Saturday?"));
 		}
 	}
 }
