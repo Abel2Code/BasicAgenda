@@ -50,18 +50,17 @@ public class AgendaDriver {
 				
 				String tempWeek = JOptionPane.showInputDialog(null, "Enter the name of the week you would like to view.");
 				int tempWeekInterval = -1;
-				System.out.println(latestWeek);
 				int counter = 0;
 				for(Week weekInterval: weeks){
-					if(weekInterval.getWeekTitle()== tempWeek){
+					if(weekInterval.getWeekTitle().equals(tempWeek)){
 						tempWeekInterval = counter;
 						break;
 					}
 					counter++;
 				}
 				
-				Week weekAgenda = weeks.get(tempWeekInterval);
 				if(tempWeekInterval != -1){
+					Week weekAgenda = weeks.get(tempWeekInterval);
 					StringBuilder agenda = new StringBuilder(weekAgenda + ":");
 					agenda.append("\n Sunday:");
 					if(weekAgenda.getSunday().isEmpty()){
@@ -119,6 +118,9 @@ public class AgendaDriver {
 							agenda.append("\n     " + interval);
 						}
 					}
+					JOptionPane.showMessageDialog(null, agenda);
+				} else{
+					JOptionPane.showMessageDialog(null, "ERROR: That agenda does not exist");
 				}
 			}
 
