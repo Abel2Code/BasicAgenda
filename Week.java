@@ -3,7 +3,7 @@ package agenda;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Week {
+public class Week implements Cloneable{
 	private String weekTitle;
 	private List<String> sunday = new ArrayList<String>();
 	private List<String> monday = new ArrayList<String>();
@@ -83,5 +83,33 @@ public class Week {
 	
 	public String toString(){
 		return weekTitle;
+	}
+	
+	public Week clone(){
+		Week newWeek;
+		try{
+			newWeek = (Week) super.clone();
+			newWeek.setSunday(makeDeepCopy(sunday));
+			newWeek.setMonday(makeDeepCopy(monday));
+			newWeek.setTuesday(makeDeepCopy(tuesday));
+			newWeek.setWednesday(makeDeepCopy(wednesday));
+			newWeek.setThursday(makeDeepCopy(thursday));
+			newWeek.setFriday(makeDeepCopy(friday));
+			newWeek.setSaturday(makeDeepCopy(saturday));			
+		} catch(CloneNotSupportedException e){
+			e.printStackTrace();
+			return null;
+		}
+		return newWeek;
+	}
+	
+	public static List<String> makeDeepCopy(List<String> toCopy){
+		List<String> tempList = new ArrayList<String>();
+		
+		for(String interval: toCopy){
+			tempList.add(interval);
+		}
+		
+		return tempList;
 	}
 }
