@@ -37,26 +37,15 @@ public class AgendaDriver {
 				}
 				break;
 			case 3:
-				StringBuilder sb = new StringBuilder("Weeks:");
-				if (weeks.isEmpty()) {
-					sb.append("\n     None");
-				} else {
-					for (Week interval : weeks) {
-						sb.append("\n     " + interval);
-					}
-				} 
-				
-				JOptionPane.showMessageDialog(null, sb);
+				displayWeeks();
 				
 				String tempWeek = JOptionPane.showInputDialog(null, "Enter the name of the week you would like to view.");
 				int tempWeekInterval = -1;
-				int counter = 0;
-				for(Week weekInterval: weeks){
-					if(weekInterval.getWeekTitle().equals(tempWeek)){
+				for(int counter = 0; counter < latestWeek; counter++){
+					if(weeks.get(counter).getWeekTitle().equals(tempWeek)){
 						tempWeekInterval = counter;
 						break;
 					}
-					counter++;
 				}
 				
 				if(tempWeekInterval != -1){
@@ -122,7 +111,31 @@ public class AgendaDriver {
 				} else{
 					JOptionPane.showMessageDialog(null, "ERROR: That agenda does not exist");
 				}
-			}
+				break;
+			case 4: 
+				displayWeeks();
+				
+				String tempWeekCopy = JOptionPane.showInputDialog(null, "Enter the name of the week you would like to copy.");
+				int tempWeekCopyInterval = -1;
+				for(int counter = 0; counter < latestWeek; counter++){
+					if(weeks.get(counter).getWeekTitle().equals(tempWeekCopy)){
+						tempWeekCopyInterval = counter;
+						break;
+					}
+				}
+				if(tempWeekCopyInterval != -1){
+					weeks.add(weeks.get(tempWeekCopyInterval).clone());
+					if(weeks.get(latestWeek) == null){
+						weeks.remove(latestWeek);
+					} else{
+						weeks.get(latestWeek).setWeekTitle(JOptionPane.showInputDialog("Enter the name for the new week"));
+					}
+					
+				} else{
+					JOptionPane.showMessageDialog(null, "ERROR: That week does not exist");
+				}
+			} 
+			
 
 		} while (selection != 0 && selection != JOptionPane.CLOSED_OPTION);
 	}
@@ -151,5 +164,19 @@ public class AgendaDriver {
 		case 7:
 			weeks.get(latestWeek - 1).getSaturday().add(JOptionPane.showInputDialog("What would you like to add to Saturday?"));
 		}
+	}
+	
+	public static void displayWeeks(){
+		StringBuilder sb = new StringBuilder("Weeks:");
+		
+		if (weeks.isEmpty()) {
+			sb.append("\n     None");
+		} else {
+			for (Week interval : weeks) {
+				sb.append("\n     " + interval);
+			}
+		} 
+		
+		JOptionPane.showMessageDialog(null, sb);
 	}
 }
