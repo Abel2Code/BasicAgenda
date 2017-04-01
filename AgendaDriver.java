@@ -1,5 +1,8 @@
 package agenda;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +17,7 @@ public class AgendaDriver {
 
 	public static void startGUI(){
 		int selection;
-		String[] mainChoices = {"Quit", "Create an New Week", "Add to a Week's Agenda", "View Past Weeks", "Copy a Past Week's Agenda"};
+		String[] mainChoices = {"Quit", "Create a New Week", "Add to a Week's Agenda", "View Past Weeks", "Copy a Past Week's Agenda", "Download Current Weeks to File"};
 		String[] daysOfWeek = {"Quit","Sunday","Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday"};
 
 		do {
@@ -147,49 +150,69 @@ public class AgendaDriver {
 				} else{
 					JOptionPane.showMessageDialog(null, "ERROR: That week does not exist");
 				}
+				break;
+			case 5:
+				saveToFile();
+
+			} while (selection != 0 && selection != JOptionPane.CLOSED_OPTION);
+		}
+
+		public static void addToWeek(int selection, int index){
+			int latestWeek = weeks.size();
+			switch (selection) {
+			case 1:
+				weeks.get(index).getSunday().add(JOptionPane.showInputDialog("What would you like to add to Sunday?"));
+				break;
+			case 2:
+				weeks.get(index).getMonday().add(JOptionPane.showInputDialog("What would you like to add to Monday?"));
+				break;
+			case 3:
+				weeks.get(index).getTuesday().add(JOptionPane.showInputDialog("What would you like to add to Tuesday?"));
+				break;
+			case 4: 
+				weeks.get(index).getWednesday().add(JOptionPane.showInputDialog("What would you like to add to Wednesday?"));
+				break;
+			case 5:
+				weeks.get(index).getThursday().add(JOptionPane.showInputDialog("What would you like to add to Thursday?"));
+				break;
+			case 6:
+				weeks.get(index).getFriday().add(JOptionPane.showInputDialog("What would you like to add to Friday?"));
+				break;
+			case 7:
+				weeks.get(index).getSaturday().add(JOptionPane.showInputDialog("What would you like to add to Saturday?"));
+			}
+		}
+
+		public static void displayWeeks(){
+			StringBuilder sb = new StringBuilder("Weeks:");
+
+			if (weeks.isEmpty()) {
+				sb.append("\n     None");
+			} else {
+				for (Week interval : weeks) {
+					sb.append("\n     " + interval);
+				}
 			} 
 
-
-		} while (selection != 0 && selection != JOptionPane.CLOSED_OPTION);
-	}
-
-	public static void addToWeek(int selection, int index){
-		int latestWeek = weeks.size();
-		switch (selection) {
-		case 1:
-			weeks.get(index).getSunday().add(JOptionPane.showInputDialog("What would you like to add to Sunday?"));
-			break;
-		case 2:
-			weeks.get(index).getMonday().add(JOptionPane.showInputDialog("What would you like to add to Monday?"));
-			break;
-		case 3:
-			weeks.get(index).getTuesday().add(JOptionPane.showInputDialog("What would you like to add to Tuesday?"));
-			break;
-		case 4: 
-			weeks.get(index).getWednesday().add(JOptionPane.showInputDialog("What would you like to add to Wednesday?"));
-			break;
-		case 5:
-			weeks.get(index).getThursday().add(JOptionPane.showInputDialog("What would you like to add to Thursday?"));
-			break;
-		case 6:
-			weeks.get(index).getFriday().add(JOptionPane.showInputDialog("What would you like to add to Friday?"));
-			break;
-		case 7:
-			weeks.get(index).getSaturday().add(JOptionPane.showInputDialog("What would you like to add to Saturday?"));
+			JOptionPane.showMessageDialog(null, sb);
+		}
+		
+		private static void saveToFile(){
+			try{
+				File inFile = new File(JOptionPane.showInputDialog("Select a file you would like to save to."));
+		        BufferedWriter writer = new BufferedWriter(new FileWriter(inFile));
+		        writer.write("Week Title, ");
+		        writer.newLine();
+		        
+				for(Week interval: weeks) {
+					String temp =  interval.getWeekTitle() + "," ;
+					writer.write(temp);
+					writer.newLine();
+				}
+				writer.close();
+			} catch(Exception e){
+				JOptionPane.showMessageDialog(null, "ERROR: Was unable to export.");
+			}
+			
 		}
 	}
-
-	public static void displayWeeks(){
-		StringBuilder sb = new StringBuilder("Weeks:");
-
-		if (weeks.isEmpty()) {
-			sb.append("\n     None");
-		} else {
-			for (Week interval : weeks) {
-				sb.append("\n     " + interval);
-			}
-		} 
-
-		JOptionPane.showMessageDialog(null, sb);
-	}
-}
