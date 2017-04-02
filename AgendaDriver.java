@@ -153,136 +153,135 @@ public class AgendaDriver {
 				break;
 			case 5:
 				saveToFile();
-
-			} while (selection != 0 && selection != JOptionPane.CLOSED_OPTION);
-		}
-
-		public static void addToWeek(int selection, int index){
-			int latestWeek = weeks.size();
-			switch (selection) {
-			case 1:
-				weeks.get(index).getSunday().add(JOptionPane.showInputDialog("What would you like to add to Sunday?"));
-				break;
-			case 2:
-				weeks.get(index).getMonday().add(JOptionPane.showInputDialog("What would you like to add to Monday?"));
-				break;
-			case 3:
-				weeks.get(index).getTuesday().add(JOptionPane.showInputDialog("What would you like to add to Tuesday?"));
-				break;
-			case 4: 
-				weeks.get(index).getWednesday().add(JOptionPane.showInputDialog("What would you like to add to Wednesday?"));
-				break;
-			case 5:
-				weeks.get(index).getThursday().add(JOptionPane.showInputDialog("What would you like to add to Thursday?"));
-				break;
-			case 6:
-				weeks.get(index).getFriday().add(JOptionPane.showInputDialog("What would you like to add to Friday?"));
-				break;
-			case 7:
-				weeks.get(index).getSaturday().add(JOptionPane.showInputDialog("What would you like to add to Saturday?"));
 			}
-		}
+		} while (selection != 0 && selection != JOptionPane.CLOSED_OPTION);
+	}
 
-		public static void displayWeeks(){
-			StringBuilder sb = new StringBuilder("Weeks:");
-
-			if (weeks.isEmpty()) {
-				sb.append("\n     None");
-			} else {
-				for (Week interval : weeks) {
-					sb.append("\n     " + interval);
-				}
-			} 
-
-			JOptionPane.showMessageDialog(null, sb);
-		}
-
-		private static void saveToFile(){
-			try{
-				File inFile = new File(JOptionPane.showInputDialog("Select a file you would like to save to."));
-				BufferedWriter writer = new BufferedWriter(new FileWriter(inFile));
-				writer.write("Week Title, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday");
-				writer.newLine();
-
-				for(Week interval: weeks) {
-					StringBuilder sb = new StringBuilder(interval.getWeekTitle() + ",");
-
-					if(interval.getSunday().isEmpty()){
-						sb.append("None");
-					} else{
-						for(String sundayInterval: interval.getSunday()){
-							sb.append(sundayInterval + "-");
-						}
-						sb.deleteCharAt(sb.length() - 1);
-					}
-					sb.append(",");
-
-					if(interval.getMonday().isEmpty()){
-						sb.append("None");
-					} else{
-						for(String mondayInterval: interval.getSunday()){
-							sb.append(mondayInterval + "-");
-						}
-						sb.deleteCharAt(sb.length() - 1);
-					}
-					sb.append(",");
-
-					if(interval.getTuesday().isEmpty()){
-						sb.append("None");
-					} else{
-						for(String tuesdayInterval: interval.getSunday()){
-							sb.append(tuesdayInterval + "-");
-						}
-						sb.deleteCharAt(sb.length() - 1);
-					}
-					sb.append(",");
-
-					if(interval.getWednesday().isEmpty()){
-						sb.append("None");
-					} else{
-						for(String wednesdayInterval: interval.getSunday()){
-							sb.append(wednesdayInterval + "-");
-						}
-						sb.deleteCharAt(sb.length() - 1);
-					}
-					sb.append(",");
-
-					if(interval.getThursday().isEmpty()){
-						sb.append("None");
-					} else{
-						for(String thursdayInterval: interval.getSunday()){
-							sb.append(thursdayInterval + "-");
-						}
-						sb.deleteCharAt(sb.length() - 1);
-					}
-					sb.append(",");
-
-					if(interval.getFriday().isEmpty()){
-						sb.append("None");
-					} else{
-						for(String fridayInterval: interval.getSunday()){
-							sb.append(fridayInterval + "-");
-						}
-						sb.deleteCharAt(sb.length() - 1);
-					}
-					sb.append(",");
-
-					if(interval.getSaturday().isEmpty()){
-						sb.append("None");
-					} else{
-						for(String saturdayInterval: interval.getSunday()){
-							sb.append(saturdayInterval + "-");
-						}
-						sb.deleteCharAt(sb.length() - 1);
-					}
-
-					writer.write("" + sb);
-					writer.newLine();
-				}
-				writer.close();
-			} catch(Exception e){
-				JOptionPane.showMessageDialog(null, "ERROR: Was unable to export.");
-			}
-
+	public static void addToWeek(int selection, int index){
+		switch (selection) {
+		case 1:
+			weeks.get(index).getSunday().add(JOptionPane.showInputDialog("What would you like to add to Sunday?"));
+			break;
+		case 2:
+			weeks.get(index).getMonday().add(JOptionPane.showInputDialog("What would you like to add to Monday?"));
+			break;
+		case 3:
+			weeks.get(index).getTuesday().add(JOptionPane.showInputDialog("What would you like to add to Tuesday?"));
+			break;
+		case 4: 
+			weeks.get(index).getWednesday().add(JOptionPane.showInputDialog("What would you like to add to Wednesday?"));
+			break;
+		case 5:
+			weeks.get(index).getThursday().add(JOptionPane.showInputDialog("What would you like to add to Thursday?"));
+			break;
+		case 6:
+			weeks.get(index).getFriday().add(JOptionPane.showInputDialog("What would you like to add to Friday?"));
+			break;
+		case 7:
+			weeks.get(index).getSaturday().add(JOptionPane.showInputDialog("What would you like to add to Saturday?"));
 		}
 	}
+
+	public static void displayWeeks(){
+		StringBuilder sb = new StringBuilder("Weeks:");
+
+		if (weeks.isEmpty()) {
+			sb.append("\n     None");
+		} else {
+			for (Week interval : weeks) {
+				sb.append("\n     " + interval);
+			}
+		} 
+
+		JOptionPane.showMessageDialog(null, sb);
+	}
+
+	private static void saveToFile(){
+		try{
+			File inFile = new File(JOptionPane.showInputDialog("Select a file you would like to save to."));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(inFile));
+			writer.write("Week Title, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday");
+			writer.newLine();
+
+			for(Week interval: weeks) {
+				StringBuilder sb = new StringBuilder(interval.getWeekTitle() + ",");
+
+				if(interval.getSunday().isEmpty()){
+					sb.append("None");
+				} else{
+					for(String sundayInterval: interval.getSunday()){
+						sb.append(sundayInterval + "-");
+					}
+					sb.deleteCharAt(sb.length() - 1);
+				}
+				sb.append(",");
+
+				if(interval.getMonday().isEmpty()){
+					sb.append("None");
+				} else{
+					for(String mondayInterval: interval.getSunday()){
+						sb.append(mondayInterval + "-");
+					}
+					sb.deleteCharAt(sb.length() - 1);
+				}
+				sb.append(",");
+
+				if(interval.getTuesday().isEmpty()){
+					sb.append("None");
+				} else{
+					for(String tuesdayInterval: interval.getSunday()){
+						sb.append(tuesdayInterval + "-");
+					}
+					sb.deleteCharAt(sb.length() - 1);
+				}
+				sb.append(",");
+
+				if(interval.getWednesday().isEmpty()){
+					sb.append("None");
+				} else{
+					for(String wednesdayInterval: interval.getSunday()){
+						sb.append(wednesdayInterval + "-");
+					}
+					sb.deleteCharAt(sb.length() - 1);
+				}
+				sb.append(",");
+
+				if(interval.getThursday().isEmpty()){
+					sb.append("None");
+				} else{
+					for(String thursdayInterval: interval.getSunday()){
+						sb.append(thursdayInterval + "-");
+					}
+					sb.deleteCharAt(sb.length() - 1);
+				}
+				sb.append(",");
+
+				if(interval.getFriday().isEmpty()){
+					sb.append("None");
+				} else{
+					for(String fridayInterval: interval.getSunday()){
+						sb.append(fridayInterval + "-");
+					}
+					sb.deleteCharAt(sb.length() - 1);
+				}
+				sb.append(",");
+
+				if(interval.getSaturday().isEmpty()){
+					sb.append("None");
+				} else{
+					for(String saturdayInterval: interval.getSunday()){
+						sb.append(saturdayInterval + "-");
+					}
+					sb.deleteCharAt(sb.length() - 1);
+				}
+
+				writer.write("" + sb);
+				writer.newLine();
+			}
+			writer.close();
+		} catch(Exception e){
+			JOptionPane.showMessageDialog(null, "ERROR: Was unable to export.");
+		}
+
+	}
+}
