@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -17,7 +18,7 @@ public class AgendaDriver {
 
 	public static void startGUI(){
 		int selection;
-		String[] mainChoices = {"Quit", "Create a New Week", "Add to a Week's Agenda", "View Past Weeks", "Copy a Past Week's Agenda", "Download Current Weeks to File"};
+		String[] mainChoices = {"Quit", "Create a New Week", "Add to a Week's Agenda", "View Past Weeks", "Copy a Past Week's Agenda", "Export Current Weeks to File", "Import weeks from File"};
 		String[] daysOfWeek = {"Quit","Sunday","Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday"};
 
 		do {
@@ -153,6 +154,9 @@ public class AgendaDriver {
 				break;
 			case 5:
 				saveToFile();
+				break;
+			case 6:
+				readFromFile();
 			}
 		} while (selection != 0 && selection != JOptionPane.CLOSED_OPTION);
 	}
@@ -282,6 +286,90 @@ public class AgendaDriver {
 		} catch(Exception e){
 			JOptionPane.showMessageDialog(null, "ERROR: Was unable to export.");
 		}
-
+	}
+	
+	public static void readFromFile(){
+		try{
+			File outFile = new File(JOptionPane.showInputDialog("Select a file you would like to import from."));
+	        Scanner fileReader = new Scanner(outFile);
+	        fileReader.nextLine();
+	        String[] values;
+	        String line;
+	        weeks.clear();
+	        List<String> sunday = new ArrayList<String>();
+	        List<String> monday = new ArrayList<String>();
+	        List<String> tuesday = new ArrayList<String>();
+	        List<String> wednesday = new ArrayList<String>();
+	        List<String> thursday = new ArrayList<String>();
+	        List<String> friday = new ArrayList<String>();
+	        List<String> saturday = new ArrayList<String>();
+	        
+	        while(fileReader.hasNextLine()){
+	        	line = fileReader.nextLine();
+	        	values = line.split(",");
+	        	while(values[1].indexOf('-') != -1){
+	        		//While next '-' is == value[1].length()
+	        		sunday.add(values[1].substring(0, values[1].indexOf('-')));
+	        		if(values[1].indexOf('-') + 1 != values[1].length()){
+	        			values[1] = values[1].substring(values[1].indexOf('-') + 1);
+	        			break;
+	        		}	        		
+	        	}
+	        	
+	        	while(values[2].indexOf('-') != -1){
+	        		monday.add(values[2].substring(0, values[2].indexOf('-')));
+	        		if(values[2].indexOf('-') + 1 != values[2].length()){
+	        			values[2] = values[2].substring(values[2].indexOf('-') + 1);
+	        			break;
+	        		}	        		
+	        	}
+	        	
+	        	while(values[3].indexOf('-') != -1){
+	        		tuesday.add(values[3].substring(0, values[3].indexOf('-')));
+	        		if(values[3].indexOf('-') + 1 != values[3].length()){
+	        			values[3] = values[3].substring(values[3].indexOf('-') + 1);
+	        			break;
+	        		}	        		
+	        	}
+	        	
+	        	while(values[4].indexOf('-') != -1){
+	        		wednesday.add(values[4].substring(0, values[4].indexOf('-')));
+	        		if(values[4].indexOf('-') + 1 != values[4].length()){
+	        			values[4] = values[4].substring(values[4].indexOf('-') + 1);
+	        			break;
+	        		}	        		
+	        	}
+	        	
+	        	while(values[5].indexOf('-') != -1){
+	        		thursday.add(values[5].substring(0, values[5].indexOf('-')));
+	        		if(values[5].indexOf('-') + 1 != values[5].length()){
+	        			values[5] = values[5].substring(values[5].indexOf('-') + 1);
+	        			break;
+	        		}	        		
+	        	}
+	        	
+	        	while(values[6].indexOf('-') != -1){
+	        		friday.add(values[6].substring(0, values[6].indexOf('-')));
+	        		if(values[6].indexOf('-') + 1 != values[6].length()){
+	        			values[6] = values[6].substring(values[6].indexOf('-') + 1);
+	        			break;
+	        		}	        		
+	        	}
+	        	
+	        	while(values[7].indexOf('-') != -1){
+	        		saturday.add(values[7].substring(0, values[7].indexOf('-')));
+	        		if(values[7].indexOf('-') + 1 != values[7].length()){
+	        			values[7] = values[7].substring(values[7].indexOf('-') + 1);
+	        			break;
+	        		}	        		
+	        	}
+	        	weeks.add(new Week(values[0], sunday, monday, tuesday, wednesday, thursday, friday, saturday));
+	        
+	        }
+			JOptionPane.showMessageDialog(null, "Success!");
+			fileReader.close();
+		} catch(Exception e){
+			JOptionPane.showMessageDialog(null, "ERROR: Was unable to export.");
+		}
 	}
 }
