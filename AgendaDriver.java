@@ -206,11 +206,10 @@ public class AgendaDriver {
 
 	private static void saveToFile(){
 		try{
-			File inFile = new File("output.txt");
+			File inFile = new File("AgendaDriverFileOutput.txt");
 			BufferedWriter writer = new BufferedWriter(new FileWriter(inFile));
 			writer.write("Week Title, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday");
 			writer.newLine();
-
 			for(Week interval: weeks) {
 				StringBuilder sb = new StringBuilder(interval.getWeekTitle() + ",");
 
@@ -294,7 +293,7 @@ public class AgendaDriver {
 	
 	public static void readFromFile(){
 		try{
-			File outFile = new File("output.txt");
+			File outFile = new File("AgendaDriverFileOutput.txt");
 	        Scanner fileReader = new Scanner(outFile);
 	        fileReader.nextLine();
 	        String[] values;
