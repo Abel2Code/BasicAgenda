@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
 import javax.swing.JOptionPane;
 
 public class AgendaDriver {
 	private static List<Week> weeks = new ArrayList<Week>(); 
 
-	public static void main(String[] args) {	
+	public static void main(String[] args) {
+		readFromFile();
 		startGUI();
 	}
 
@@ -28,6 +28,9 @@ public class AgendaDriver {
 			int latestWeek = weeks.size();
 
 			switch (selection) {
+			case 0:
+				saveToFile();
+				break;
 			case 1:
 				String nameOfWeek = JOptionPane.showInputDialog("What would you like to name this Week?");
 				weeks.add(new Week(nameOfWeek));
@@ -203,7 +206,7 @@ public class AgendaDriver {
 
 	private static void saveToFile(){
 		try{
-			File inFile = new File(JOptionPane.showInputDialog("Select a file you would like to save to."));
+			File inFile = new File("output.txt");
 			BufferedWriter writer = new BufferedWriter(new FileWriter(inFile));
 			writer.write("Week Title, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday");
 			writer.newLine();
@@ -291,7 +294,7 @@ public class AgendaDriver {
 	
 	public static void readFromFile(){
 		try{
-			File outFile = new File(JOptionPane.showInputDialog("Select a file you would like to import from."));
+			File outFile = new File("output.txt");
 	        Scanner fileReader = new Scanner(outFile);
 	        fileReader.nextLine();
 	        String[] values;
@@ -319,10 +322,10 @@ public class AgendaDriver {
 	        	weeks.add(new Week(values[0], sunday, monday, tuesday, wednesday, thursday, friday, saturday));
 	        }
 	        
-			JOptionPane.showMessageDialog(null, "Success!");
+			JOptionPane.showMessageDialog(null, "Welcome!");
 			fileReader.close();
 		} catch(Exception e){
-			JOptionPane.showMessageDialog(null, "ERROR: Was unable to export.");
+			JOptionPane.showMessageDialog(null, "Greetings new user!");
 		}
 	}
 }
